@@ -1,2 +1,2 @@
 # angular-mobile
-Mobile front-end for shared car "Viajando"
+Mobile front-end builded in Angular for the shared cars trips.
