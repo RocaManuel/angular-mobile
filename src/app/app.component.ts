@@ -1,129 +1,89 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Router } from '@angular/router';
-import { SwUpdate } from '@angular/service-worker';
+import { Component, ViewChild } from '@angular/core';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
+import { TranslateService } from '@ngx-translate/core';
+import { Config, Nav, Platform } from 'ionic-angular';
 
-import { MenuController, Platform, ToastController } from '@ionic/angular';
-
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
-
-import { Storage } from '@ionic/storage';
-
-import { UserData } from './providers/user-data';
+import { FirstRunPage } from '../pages';
+import { Settings } from '../providers';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  template: `<ion-menu [content]="content" type="overlay">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Pages</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <ion-list>
+        <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+          {{p.title}}
+        </button>
+      </ion-list>
+    </ion-content>
+
+  </ion-menu>
+  <ion-nav #content [root]="rootPage"></ion-nav>`
 })
-export class AppComponent implements OnInit {
-  appPages = [
-    {
-      title: 'Schedule',
-      url: '/app/tabs/schedule',
-      icon: 'calendar'
-    },
-    {
-      title: 'Speakers',
-      url: '/app/tabs/speakers',
-      icon: 'people'
-    },
-    {
-      title: 'Map',
-      url: '/app/tabs/map',
-      icon: 'map'
-    },
-    {
-      title: 'About',
-      url: '/app/tabs/about',
-      icon: 'information-circle'
-    }
-  ];
-  loggedIn = false;
-  dark = false;
+export class MyApp {
+  rootPage = FirstRunPage;
 
-  constructor(
-    private menu: MenuController,
-    private platform: Platform,
-    private router: Router,
-    private splashScreen: SplashScreen,
-    private statusBar: StatusBar,
-    private storage: Storage,
-    private userData: UserData,
-    private swUpdate: SwUpdate,
-    private toastCtrl: ToastController,
-  ) {
-    this.initializeApp();
-  }
+  @ViewChild(Nav) nav: Nav;
 
-  async ngOnInit() {
-    this.checkLoginStatus();
-    this.listenForLoginEvents();
+  pages: any[] = [
+    { title: 'Tutorial', component: 'TutorialPage' },
+    { title: 'Welcome', component: 'WelcomePage' },
+    { title: 'Tabs', component: 'TabsPage' },
+    { title: 'Cards', component: 'CardsPage' },
+    { title: 'Content', component: 'ContentPage' },
+    { title: 'Login', component: 'LoginPage' },
+    { title: 'Signup', component: 'SignupPage' },
+    { title: 'Master Detail', component: 'ListMasterPage' },
+    { title: 'Menu', component: 'MenuPage' },
+    { title: 'Settings', component: 'SettingsPage' },
+    { title: 'Search', component: 'SearchPage' }
+  ]
 
-    this.swUpdate.available.subscribe(async res => {
-      const toast = await this.toastCtrl.create({
-        message: 'Update available!',
-        position: 'bottom',
-        buttons: [
-          {
-            role: 'cancel',
-            text: 'Reload'
-          }
-        ]
-      });
-
-      await toast.present();
-
-      toast
-        .onDidDismiss()
-        .then(() => this.swUpdate.activateUpdate())
-        .then(() => window.location.reload());
-    });
-  }
-
-  initializeApp() {
-    this.platform.ready().then(() => {
+  constructor(private translate: TranslateService, platform: Platform, settings: Settings, private config: Config, private statusBar: StatusBar, private splashScreen: SplashScreen) {
+    platform.ready().then(() => {
+      // Okay, so the platform is ready and our plugins are available.
+      // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+    this.initTranslate();
   }
 
-  checkLoginStatus() {
-    return this.userData.isLoggedIn().then(loggedIn => {
-      return this.updateLoggedInStatus(loggedIn);
+  initTranslate() {
+    // Set the default language for translation strings, and the current language.
+    this.translate.setDefaultLang('en');
+    const browserLang = this.translate.getBrowserLang();
+
+    if (browserLang) {
+      if (browserLang === 'zh') {
+        const browserCultureLang = this.translate.getBrowserCultureLang();
+
+        if (browserCultureLang.match(/-CN|CHS|Hans/i)) {
+          this.translate.use('zh-cmn-Hans');
+        } else if (browserCultureLang.match(/-TW|CHT|Hant/i)) {
+          this.translate.use('zh-cmn-Hant');
+        }
+      } else {
+        this.translate.use(this.translate.getBrowserLang());
+      }
+    } else {
+      this.translate.use('en'); // Set your language here
+    }
+
+    this.translate.get(['BACK_BUTTON_TEXT']).subscribe(values => {
+      this.config.set('ios', 'backButtonText', values.BACK_BUTTON_TEXT);
     });
   }
 
-  updateLoggedInStatus(loggedIn: boolean) {
-    setTimeout(() => {
-      this.loggedIn = loggedIn;
-    }, 300);
-  }
-
-  listenForLoginEvents() {
-    window.addEventListener('user:login', () => {
-      this.updateLoggedInStatus(true);
-    });
-
-    window.addEventListener('user:signup', () => {
-      this.updateLoggedInStatus(true);
-    });
-
-    window.addEventListener('user:logout', () => {
-      this.updateLoggedInStatus(false);
-    });
-  }
-
-  logout() {
-    this.userData.logout().then(() => {
-      return this.router.navigateByUrl('/app/tabs/schedule');
-    });
-  }
-
-  openTutorial() {
-    this.menu.enable(false);
-    this.storage.set('ion_did_tutorial', false);
-    this.router.navigateByUrl('/tutorial');
+  openPage(page) {
+    // Reset the content nav to have just this page
+    // we wouldn't want the back button to show in this scenario
+    this.nav.setRoot(page.component);
   }
 }
