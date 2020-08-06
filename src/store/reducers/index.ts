@@ -10,6 +10,8 @@ export const selectUserState = (state: AppState) => state.user;
 
 
 export const selectUser = createSelector(selectUserState, state => state.user);
+export const selectUserError = createSelector(selectUserState, state => state.error);
+export const selectUserPending = createSelector(selectUserState, state => state.pending);
 
 export const reducer : ActionReducerMap<AppState> = {
     user: User.reducer

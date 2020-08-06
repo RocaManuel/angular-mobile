@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'login' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content scroll="false">
+  <form name="loginForm" [formGroup]="loginForm" (ngSubmit)="login()">
+    <ion-item-group mode="md">
+      <ion-item>
+        <ion-label position="floating">{{ 'email' | translate }}</ion-label>
+        <ion-input (ionChange)="inputChange($event, 'email')" type="text" formControlName="email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">{{ 'password' | translate }}</ion-label>
+        <ion-input (ionChange)="inputChange($event, 'password')" type="password" formControlName="password"></ion-input>
+      </ion-item>
+    </ion-item-group>
+  </form>
+  <ion-button class="ion-margin" expand="block" color="primary" (click)="login()">{{ 'LOG_IN' | translate }}
+  </ion-button>
+</ion-content>
