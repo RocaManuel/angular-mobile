@@ -21,11 +21,14 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { LoginPage } from './login/login.page';
 import { WelcomePage } from './welcome/welcome.page';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RegisterPage } from './register/register';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginPage,
+    RegisterPage,
     WelcomePage
   ],
   entryComponents: [],
@@ -36,7 +39,9 @@ import { WelcomePage } from './welcome/welcome.page';
     EffectsModule.forRoot([
       AuthEffects
     ]),
+    FormsModule,
     HttpClientModule,
+    ReactiveFormsModule,
     StoreModule.forRoot(reducer),
     TranslateModule.forRoot()
   ],
