@@ -1,0 +1,40 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ion-title>{{ 'register' | translate }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content scroll="false">
+    <form name="registerForm" [formGroup]="registerForm" (ngSubmit)="register()">
+      <ion-item-group mode="md">
+        <ion-item>
+            <ion-label position="floating">{{ 'country' | translate }}</ion-label>
+            <ion-input (ionChange)="inputChange($event, 'country')" type="text" autocomplete="country"  formControlName="country"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label position="floating">{{ 'location' | translate }}</ion-label>
+            <ion-input (ionChange)="inputChange($event, 'location')" type="text" autocomplete="off" formControlName="location"></ion-input>
+        </ion-item>  
+        <ion-item>
+          <ion-label position="floating">{{ 'name' | translate }}</ion-label>
+          <ion-input (ionChange)="inputChange($event, 'name')" type="text" autocomplete="name" formControlName="name"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label position="floating">{{ 'lastname' | translate }}</ion-label>
+            <ion-input (ionChange)="inputChange($event, 'lastname')" type="text" autocomplete="family-name" formControlName="lastname"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">{{ 'email' | translate }}</ion-label>
+          <ion-input (ionChange)="inputChange($event, 'email')" type="email" formControlName="email"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label position="floating">{{ 'password' | translate }}</ion-label>
+            <ion-input (ionChange)="inputChange($event, 'password')" type="password" autocomplete="off" formControlName="password"></ion-input>
+        </ion-item>
+      </ion-item-group>
+    </form>
+    <ion-button class="ion-margin" expand="block" color="primary" (click)="register()">{{ 'REGISTER_IN' | translate }}
+    </ion-button>
+  </ion-content>

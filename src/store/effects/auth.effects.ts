@@ -25,6 +25,24 @@ login$ = createEffect(
     )
 );
 
+register$ = createEffect(
+  () =>
+    this.actions$.pipe(
+      ofType(AuthActions.register),
+      mergeMap(({ params: { country, location , name, lastname, email, password } }) =>
+        this.authService.authRegister({ country, location, name, lastname, email, password }).pipe(
+          map(({ response }) => {
+            this.router.navigate(['/']);
+            return AuthActions.registerSuccess({ user: response });
+          }),
+          catchError(error => of(AuthActions.registerFailure({ error })))
+        )
+      )
+    )
+);
+
+
+
 constructor(
   private actions$: Actions,
   private authService: AuthService,
