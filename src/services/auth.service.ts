@@ -4,7 +4,9 @@ import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthService {
   constructor(private http: HttpClient) { }
 
