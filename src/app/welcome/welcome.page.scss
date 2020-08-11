@@ -1,8 +1,8 @@
   .splash-bg {
     position: relative;
-    background: url('../../assets/img/splashbg.png') no-repeat transparent;
+    background: linear-gradient(rgb(229 94 94 / 32%), rgb(96 75 148 / 89%)), url('../../assets/img/splashbg.png') no-repeat transparent;
     background-size: cover;
-    height: 45%;
+    height: 100vh;
     z-index: 1;
     background-repeat: repeat-x;
     animation: animatedBackground 40s linear infinite;
@@ -12,10 +12,10 @@
     to { background-position: 100% 0; }
   }
   .splash-info {
-    position: relative;
-    z-index: 2;
-    margin-top: -64px;
-    text-align: center;
+    position: absolute;
+    z-index: 5000;
+    top: 6vh;
+    left: 32vw;
   }
   .splash-logo {
     margin: auto;
@@ -32,6 +32,14 @@
   }
   .button-wrapper {
     position: absolute;
-    width: 100%;
-    bottom: 20%;
+    width: 89%;
+    top: 11vh;
+  }
+  .login-wrapper {
+    position: absolute;
+    top: 26vh;
+    left: 7px;
+    width: 91%;
+    height: 52%;
+    background: #ffffffa8;
   }

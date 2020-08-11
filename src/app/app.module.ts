@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { RouteReuseStrategy } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 
 // Redux
 import { AuthEffects } from 'src/store/effects/auth.effects';
@@ -23,6 +23,7 @@ import { LoginPage } from './login/login.page';
 import { WelcomePage } from './welcome/welcome.page';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegisterPage } from './register/register';
+import { CustomTranslationLoader } from 'src/factories/translation-loader.factory';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,10 @@ import { RegisterPage } from './register/register';
     HttpClientModule,
     ReactiveFormsModule,
     StoreModule.forRoot(reducer),
-    TranslateModule.forRoot()
+    TranslateModule.forRoot({
+      defaultLanguage: 'en',
+      loader: { provide: TranslateLoader, useClass: CustomTranslationLoader }
+    })
   ],
   providers: [
     StatusBar,
