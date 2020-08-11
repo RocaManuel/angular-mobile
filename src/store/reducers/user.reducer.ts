@@ -16,7 +16,9 @@ export const initialState: State = {
 const userReducer = createReducer(
     initialState,
     on(AuthActions.login, state => ({ ...state, pending : true })),
+    on(AuthActions.register, state => ({ ...state, pending : true })),
     on(AuthActions.loginSuccess, (state, {user}) => ({ ...state, pending : false, user })),
+    on(AuthActions.registerSuccess, (state, {user}) => ({ ...state, pending : false, user })),
     on(AuthActions.loginFailure, (state, {error}) => ({ ...state, pending : false, error }))
   );
   

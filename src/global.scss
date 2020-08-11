@@ -24,3 +24,22 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+/* Text Styles
+==================================== */
+.primary-content {
+  font-size: 18px;
+  color: var(--ion-color-dark);
+  font-weight: 700;
+}
+.secondary-content {
+  font-size: 14px;
+  color: var(--ion-color-gray-text);
+  font-weight: 400;
+  line-height: 1.5;
+}
+.tertiary-content {
+  color: var(--ion-color-light-gray-text);
+  font-weight: 400;
+  font-size: 12px;
+}

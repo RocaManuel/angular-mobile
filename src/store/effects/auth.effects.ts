@@ -9,43 +9,40 @@ import { Router } from '@angular/router';
 @Injectable()
 export class AuthEffects {
 
-login$ = createEffect(
-  () =>
-    this.actions$.pipe(
-      ofType(AuthActions.login),
-      mergeMap(({ email, password }) =>
-        this.authService.auth({ email, password }).pipe(
-          map(({ response }) => {
-            this.router.navigate(['/']);
-            return AuthActions.loginSuccess({ user: response });
-          }),
-          catchError(error => of(AuthActions.loginFailure({ error })))
+  login$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AuthActions.login),
+        mergeMap(({ email, password }) =>
+          this.authService.auth({ email, password }).pipe(
+            map(({ response }) => {
+              this.router.navigate(['/']);
+              return AuthActions.loginSuccess({ user: response });
+            }),
+            catchError(error => of(AuthActions.loginFailure({ error })))
+          )
         )
       )
-    )
-);
+  );
 
-register$ = createEffect(
-  () =>
-    this.actions$.pipe(
-      ofType(AuthActions.register),
-      mergeMap(({ params: { country, location , name, lastname, email, password } }) =>
-        this.authService.authRegister({ country, location, name, lastname, email, password }).pipe(
-          map(({ response }) => {
-            this.router.navigate(['/']);
-            return AuthActions.registerSuccess({ user: response });
-          }),
-          catchError(error => of(AuthActions.registerFailure({ error })))
+  register$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AuthActions.register),
+        mergeMap(({ params: { country, location, name, lastname, email, password } }) =>
+          this.authService.authRegister({ country, location, name, lastname, email, password }).pipe(
+            map(({ response }) => AuthActions.registerSuccess({ user: response })),
+            catchError(error => of(AuthActions.registerFailure({ error })))
+          )
         )
       )
-    )
-);
+  );
 
 
 
-constructor(
-  private actions$: Actions,
-  private authService: AuthService,
-  private router: Router
-) { }
+  constructor(
+    private actions$: Actions,
+    private authService: AuthService,
+    private router: Router
+  ) { }
 }
