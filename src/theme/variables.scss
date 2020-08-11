@@ -522,6 +522,7 @@ ion-item {
   --inner-padding-bottom: 4px;
   --inner-padding-top: 4px;
   font-weight: 300;
+  border: 1px solid #00000014;
   &.item-has-focus {
     transition: ease-in-out 0.25s;
     @media (prefers-color-scheme: dark) {
