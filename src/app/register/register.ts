@@ -37,9 +37,9 @@ export class RegisterPage implements OnInit, OnDestroy {
 
 
   public registerForm: FormGroup = new FormGroup({
-    email: new FormControl('', Validators.required),
+    email: new FormControl('', [ Validators.required, Validators.email ]),
     password: new FormControl('', Validators.required),
-    country: new FormControl('', Validators.required),
+    country: new FormControl('Argentina', Validators.required),
     location: new FormControl('', Validators.required),
     name: new FormControl('', Validators.required),
     lastname: new FormControl('', Validators.required)
@@ -103,5 +103,24 @@ export class RegisterPage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.ngUnsuscribe.next();
+  }
+
+  get countryValid() {
+    return this.registerForm.get('country').touched ? this.registerForm.get('country').valid : true;
+  }
+  get locationValid() {
+    return this.registerForm.get('location').touched ? this.registerForm.get('location').valid : true;
+  }
+  get nameValid() {
+    return this.registerForm.get('name').touched ? this.registerForm.get('name').valid : true;
+  }
+  get lastnameValid() {
+    return this.registerForm.get('lastname').touched ? this.registerForm.get('lastname').valid : true;
+  }
+  get emailValid() {
+    return this.registerForm.get('email').touched ? this.registerForm.get('email').valid : true;
+  }
+  get passwordValid() {
+    return this.registerForm.get('password').touched ? this.registerForm.get('password').valid : true;
   }
 }
