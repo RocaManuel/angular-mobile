@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Store, select } from '@ngrx/store';
@@ -7,6 +7,7 @@ import { Observable, Subject } from 'rxjs';
 import * as fromState from '../../store/reducers';
 import { takeUntil } from 'rxjs/operators';
 import { RegisterParams } from '../../interfaces/auth.interfaces';
+import { IonSlides } from '@ionic/angular';
 
 @Component({
   selector: 'app-register',
@@ -16,15 +17,24 @@ import { RegisterParams } from '../../interfaces/auth.interfaces';
 
 export class RegisterPage implements OnInit, OnDestroy {
 
+  @ViewChild('sliderRef', { read: IonSlides }) slider: IonSlides;
 
   constructor(
     private store: Store
   ) { }
 
+  public   slideOpts = {
+    initialSlide: 0,
+    speed: 400,
+    allowTouchMove: false
+  };
+  public pending: boolean;
+
   private registerError$: Observable<any> = this.store.pipe(select(fromState.selectUserError));
   private registerPending$: Observable<any> = this.store.pipe(select(fromState.selectUserPending));
   private user$: Observable<any> = this.store.pipe(select(fromState.selectUser));
   private ngUnsuscribe = new Subject();
+
 
   public registerForm: FormGroup = new FormGroup({
     email: new FormControl('', Validators.required),
@@ -40,15 +50,43 @@ export class RegisterPage implements OnInit, OnDestroy {
       console.log(e);
     });
     this.registerPending$.pipe(takeUntil(this.ngUnsuscribe)).subscribe((p) => {
-      console.log(p);
+      this.pending = p;
     });
     this.user$.pipe(takeUntil(this.ngUnsuscribe)).subscribe((u) => {
-      console.log(u);
+      this.slider.slideNext();
     });
   }
 
   inputChange(e, input) {
     this.registerForm.get(input).setValue(e.detail.value);
+  }
+
+  async onButtonPress() {
+    const index = await this.slider.getActiveIndex();
+    if (index === 1) {
+      if (this.validatePersonalParams()) { return this.slider.slideNext(); }
+      return false;
+    }
+    if (index === 2) {
+      if (this.validateLoginParams()) { return this.register(); }
+      return false;
+    }
+    this.slider.slideNext();
+  }
+
+  validatePersonalParams() {
+    this.registerForm.get('country').markAsTouched();
+    this.registerForm.get('location').markAsTouched();
+    this.registerForm.get('name').markAsTouched();
+    this.registerForm.get('lastname').markAsTouched();
+    return this.registerForm.get('country').valid && this.registerForm.get('location').valid && this.registerForm.get('name').valid
+      && this.registerForm.get('lastname').valid;
+  }
+
+  validateLoginParams() {
+    this.registerForm.get('email').markAsTouched();
+    this.registerForm.get('password').markAsTouched();
+    return this.registerForm.get('email').valid && this.registerForm.get('password').valid;
   }
 
   register() {
@@ -60,7 +98,6 @@ export class RegisterPage implements OnInit, OnDestroy {
       email: this.registerForm.get('email').value,
       password: this.registerForm.get('password').value
     };
-    console.log(params);
     this.store.dispatch(register({ params }));
   }
 

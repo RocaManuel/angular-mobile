@@ -1,5 +1,17 @@
 {
+  "almost_there": "Almost there",
+  "begin": "Begin",
+  "city": "City",
+  "continue": "Continue",
+  "everything_ready": "Everything ready!",
+  "first_register_title": "Going on!",
+  "first_register_text": "To start using the app we will ask you to provide us some information",
+  "lets_jump_app": "Let's jump to the action and start traveling in the cheapest way",
   "log_in": "Log In",
   "sign_up": "Sign up",
+  "set_security": "Let set some security of your account and login credentials",
+  "start": "Start",
+  "tell_us_about_you": "Hey tell us about you!",
+  "tell_us_about_you_text": "To provide a entire service we need to know some basic information",
   "or": "Or"
 }

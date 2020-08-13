@@ -1,40 +1,115 @@
-<ion-header>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-back-button></ion-back-button>
-      </ion-buttons>
-      <ion-title>{{ 'register' | translate }}</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content scroll="false">
+<ion-content scroll="false">
+  <ion-content>
     <form name="registerForm" [formGroup]="registerForm" (ngSubmit)="register()">
-      <ion-item-group mode="md">
-        <ion-item>
-            <ion-label position="floating">{{ 'country' | translate }}</ion-label>
-            <ion-input (ionChange)="inputChange($event, 'country')" type="text" autocomplete="country"  formControlName="country"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label position="floating">{{ 'location' | translate }}</ion-label>
-            <ion-input (ionChange)="inputChange($event, 'location')" type="text" autocomplete="off" formControlName="location"></ion-input>
-        </ion-item>  
-        <ion-item>
-          <ion-label position="floating">{{ 'name' | translate }}</ion-label>
-          <ion-input (ionChange)="inputChange($event, 'name')" type="text" autocomplete="name" formControlName="name"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label position="floating">{{ 'lastname' | translate }}</ion-label>
-            <ion-input (ionChange)="inputChange($event, 'lastname')" type="text" autocomplete="family-name" formControlName="lastname"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">{{ 'email' | translate }}</ion-label>
-          <ion-input (ionChange)="inputChange($event, 'email')" type="email" formControlName="email"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label position="floating">{{ 'password' | translate }}</ion-label>
-            <ion-input (ionChange)="inputChange($event, 'password')" type="password" autocomplete="off" formControlName="password"></ion-input>
-        </ion-item>
-      </ion-item-group>
+      <ion-slides class="slider-config" [options]="slideOpts" #sliderRef>
+        <ion-slide>
+          <ion-grid class="grid-wrapper">
+            <ion-row class="ion-text-center">
+              <ion-col size="10" offset="1" size-sm="8" offset-sm="2">
+                <ion-img class="tutorial-content-img" src="../../assets/img/undraw_access_account_99n5.png"></ion-img>
+                <div class="primary-content tutorial-title">{{ 'first_register_title' | translate }}</div>
+                <div class="secondary-content">{{ 'first_register_text' | translate }}</div>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ion-text-center tutorial-actions">
+              <ion-col size="10" offset="1" size-sm="8" offset-sm="2">
+                <ion-button expand="block" (click)="onButtonPress()" mode="ios" color="primary">
+                  {{ 'begin' | translate }}</ion-button>
+              </ion-col>
+              <ion-col size="10" offset="1" size-sm="8" offset-sm="2">
+                <a *ngIf="skip" (click)="onSkipPress()">{{ 'skip' | translate }}</a>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-slide>
+        <ion-slide>
+          <ion-grid class="grid-wrapper">
+            <ion-row class="ion-text-center">
+              <ion-col size="10" offset="1" size-sm="8" offset-sm="2">
+                <ion-img class="tutorial-content-img" src="../../assets/img/undraw_updated_resume_u4fy.png"></ion-img>
+                <div class="primary-content tutorial-title">{{ 'tell_us_about_you' | translate }}</div>
+                <div class="secondary-content">{{ 'tell_us_about_you_text' | translate }}</div>
+                <ion-item-group mode="md">
+                  <ion-item>
+                    <ion-label position="floating">{{ 'name' | translate }}</ion-label>
+                    <ion-input (ionChange)="inputChange($event, 'name')" type="text" autocomplete="name"
+                      formControlName="name">
+                    </ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label position="floating">{{ 'lastname' | translate }}</ion-label>
+                    <ion-input (ionChange)="inputChange($event, 'lastname')" type="text" autocomplete="family-name"
+                      formControlName="lastname"></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label position="floating">{{ 'country' | translate }}</ion-label>
+                    <ion-input (ionChange)="inputChange($event, 'country')" type="text" autocomplete="country"
+                      formControlName="country"></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label position="floating">{{ 'city' | translate }}</ion-label>
+                    <ion-input (ionChange)="inputChange($event, 'location')" type="text" autocomplete="off"
+                      formControlName="location"></ion-input>
+                  </ion-item>
+                </ion-item-group>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ion-text-center tutorial-actions">
+              <ion-col size="10" offset="1" size-sm="8" offset-sm="2">
+                <ion-button expand="block" (click)="onButtonPress()" mode="ios" color="primary">
+                  {{ 'continue' | translate }}</ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-slide>
+        <ion-slide>
+          <ion-grid class="grid-wrapper">
+            <ion-row class="ion-text-center">
+              <ion-col size="10" offset="1" size-sm="8" offset-sm="2">
+                <ion-img class="tutorial-content-img" src="../../assets/img/undraw_feeling_proud_qne1.png"></ion-img>
+                <div class="primary-content tutorial-title">{{ 'almost_there' | translate }}</div>
+                <div class="secondary-content">{{ 'set_security' | translate }}</div>
+                <ion-item-group mode="md">
+                  <ion-item>
+                    <ion-label position="floating">{{ 'email' | translate }}</ion-label>
+                    <ion-input (ionChange)="inputChange($event, 'email')" type="email" formControlName="email">
+                    </ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label position="floating">{{ 'password' | translate }}</ion-label>
+                    <ion-input (ionChange)="inputChange($event, 'password')" type="password" autocomplete="off"
+                      formControlName="password"></ion-input>
+                  </ion-item>
+                </ion-item-group>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ion-text-center tutorial-actions">
+              <ion-col size="10" offset="1" size-sm="8" offset-sm="2">
+                <ion-button *ngIf="!pending" expand="block" (click)="onButtonPress()" mode="ios" color="primary">
+                  {{'continue' | translate }}
+                </ion-button>
+                <ion-spinner *ngIf="pending" name="lines"></ion-spinner>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-slide>
+        <ion-slide>
+          <ion-grid class="grid-wrapper">
+            <ion-row class="ion-text-center">
+              <ion-col size="10" offset="1" size-sm="8" offset-sm="2">
+                <ion-img class="tutorial-content-img" src="../../assets/img/undraw_verified_tw20.png"></ion-img>
+                <div class="primary-content tutorial-title">{{ 'everything_ready' | translate }}</div>
+                <div class="secondary-content">{{ 'lets_jump_app' | translate }}</div>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ion-text-center tutorial-actions">
+              <ion-col size="10" offset="1" size-sm="8" offset-sm="2">
+                <ion-button expand="block" (click)="onButtonPress()" mode="ios" color="primary">
+                  {{ 'start' | translate }}</ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-slide>
+      </ion-slides>
     </form>
-    <ion-button class="ion-margin" expand="block" color="primary" (click)="register()">{{ 'REGISTER_IN' | translate }}
-    </ion-button>
   </ion-content>
