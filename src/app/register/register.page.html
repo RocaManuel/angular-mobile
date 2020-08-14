@@ -30,23 +30,23 @@
                 <div class="primary-content tutorial-title">{{ 'tell_us_about_you' | translate }}</div>
                 <div class="secondary-content">{{ 'tell_us_about_you_text' | translate }}</div>
                 <ion-item-group mode="md">
-                  <ion-item>
+                  <ion-item [ngClass]="{'error': !nameValid }">
                     <ion-label position="floating">{{ 'name' | translate }}</ion-label>
-                    <ion-input (ionChange)="inputChange($event, 'name')" type="text" autocomplete="name"
+                    <ion-input (ionChange)="inputChange($event, 'name')" type="text" autocomplete="off"
                       formControlName="name">
                     </ion-input>
                   </ion-item>
-                  <ion-item>
+                  <ion-item [ngClass]="{'error': !lastnameValid }">
                     <ion-label position="floating">{{ 'lastname' | translate }}</ion-label>
-                    <ion-input (ionChange)="inputChange($event, 'lastname')" type="text" autocomplete="family-name"
+                    <ion-input (ionChange)="inputChange($event, 'lastname')" type="text" autocomplete="off"
                       formControlName="lastname"></ion-input>
                   </ion-item>
-                  <ion-item>
+                  <ion-item [ngClass]="{'error': !countryValid }">
                     <ion-label position="floating">{{ 'country' | translate }}</ion-label>
-                    <ion-input (ionChange)="inputChange($event, 'country')" type="text" autocomplete="country"
+                    <ion-input disabled (ionChange)="inputChange($event, 'country' )" type="text" autocomplete="off"
                       formControlName="country"></ion-input>
                   </ion-item>
-                  <ion-item>
+                  <ion-item [ngClass]="{'error': !locationValid }">
                     <ion-label position="floating">{{ 'city' | translate }}</ion-label>
                     <ion-input (ionChange)="inputChange($event, 'location')" type="text" autocomplete="off"
                       formControlName="location"></ion-input>
@@ -70,12 +70,12 @@
                 <div class="primary-content tutorial-title">{{ 'almost_there' | translate }}</div>
                 <div class="secondary-content">{{ 'set_security' | translate }}</div>
                 <ion-item-group mode="md">
-                  <ion-item>
+                  <ion-item [ngClass]="{'error': !emailValid }">
                     <ion-label position="floating">{{ 'email' | translate }}</ion-label>
-                    <ion-input (ionChange)="inputChange($event, 'email')" type="email" formControlName="email">
-                    </ion-input>
+                    <ion-input (ionChange)="inputChange($event, 'email')" type="email" autocomplete="off"
+                      formControlName="email"></ion-input>
                   </ion-item>
-                  <ion-item>
+                  <ion-item [ngClass]="{'error': !passwordValid }">
                     <ion-label position="floating">{{ 'password' | translate }}</ion-label>
                     <ion-input (ionChange)="inputChange($event, 'password')" type="password" autocomplete="off"
                       formControlName="password"></ion-input>
