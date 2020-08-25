@@ -15,7 +15,8 @@ export class AuthEffects {
         ofType(AuthActions.login),
         mergeMap(({ email, password }) =>
           this.authService.auth({ email, password }).pipe(
-            map(({ response }) => {
+            map(({ response, token }) => {
+              this.authService.setToken(token);
               this.router.navigate(['/']);
               return AuthActions.loginSuccess({ user: response });
             }),
@@ -31,7 +32,11 @@ export class AuthEffects {
         ofType(AuthActions.register),
         mergeMap(({ params: { country, location, name, lastname, email, password } }) =>
           this.authService.authRegister({ country, location, name, lastname, email, password }).pipe(
-            map(({ response }) => AuthActions.registerSuccess({ user: response })),
+            map(({ response, token }) => {
+              this.authService.setToken(token);
+              this.router.navigate(['/']);
+              return AuthActions.registerSuccess({ user: response });
+            }),
             catchError(error => of(AuthActions.registerFailure({ error })))
           )
         )

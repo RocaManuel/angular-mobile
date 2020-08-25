@@ -1,9 +1,10 @@
 // Angular
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { RouteReuseStrategy } from '@angular/router';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { AuthInterceptor } from '../interceptors/auth.interceptor';
 
 // Redux
 import { AuthEffects } from 'src/store/effects/auth.effects';
@@ -24,6 +25,7 @@ import { WelcomePage } from './welcome/welcome.page';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegisterPage } from './register/register';
 import { CustomTranslationLoader } from 'src/factories/translation-loader.factory';
+
 
 @NgModule({
   declarations: [
@@ -52,7 +54,8 @@ import { CustomTranslationLoader } from 'src/factories/translation-loader.factor
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

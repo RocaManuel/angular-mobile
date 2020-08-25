@@ -14,9 +14,17 @@ export class AuthService {
   public auth(params: { email: string, password: string }): Observable<any> {
     return this.http.get<any>( `${environment.apiUrl}/api/v1/users/`, { params } );
   }
-  
+
   public authRegister(params: RegisterParams): Observable<any> {
     return this.http.post<any>( `${environment.apiUrl}/api/v1/users/`, params );
+  }
+
+  public getToken(): string {
+    return localStorage.getItem('token');
+  }
+
+  public setToken(token: string) {
+    localStorage.setItem('token', token);
   }
 
 }
