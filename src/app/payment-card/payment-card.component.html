@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'credit_card' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content scroll="false">
+  <form name="cardForm" [formGroup]="cardForm" (ngSubmit)="submit()">
+    <ion-item-group mode="md">
+      <ion-row>
+        <ion-col size="12">
+          <ion-item [ngClass]="{'error': !cardNumber.valid && cardNumber.touched }">
+            <ion-label position="floating">{{ 'credit_card_number' | translate }}</ion-label>
+            <ion-input (ionChange)="formatCreditCard($event, 'cardNumber')" value="cardNumber" formControlName="cardNumber"></ion-input>
+            <ion-icon slot="end" *ngIf="!cardLogo" [@enterAnimation] class="card-logo" name="card-outline"> </ion-icon>
+            <img slot="end" *ngIf="cardLogo" [@enterAnimation] class="card-logo flip" [src]="cardLogo"/>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <ion-item [ngClass]="{'error': !expiration.valid && expiration.touched}">
+            <ion-label position="floating">{{ 'experation_date' | translate }}</ion-label>
+            <ion-input #expirationDateField (ionChange)="formatDate($event)" formControlName="expiration" placeholder="MM/YY"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="6">
+          <ion-item [ngClass]="{'error': !ccv.valid && ccv.toucheded }">
+            <ion-label position="floating">{{ 'security_code' | translate }}</ion-label>
+            <ion-input #ccvField [maxLength]="3" (ionChange)="setCCV($event)" type="number" formControlName="securityCode"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-item [ngClass]="{'error': !cardholderName.valid && cardholderName.toucheded }">
+        <ion-label position="floating">{{ 'card_holder_name' | translate }}</ion-label>
+        <ion-input #cardHolderNameField (ionChange)="inputChange($event, 'cardholderName')" type="text" formControlName="cardholderName">
+        </ion-input>
+      </ion-item>
+      <ion-row>
+        <ion-col size="4">
+          <ion-item style="height: 64px;" [ngClass]="{'error': !docType.valid && docType.touched }">
+            <ion-input (ionChange)="inputChange($event, 'docType')" type="text" formControlName="docType" disabled></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="8">
+          <ion-item [ngClass]="{'error': !docNumber.valid && docNumber.touched }">
+            <ion-label position="floating">{{ 'document_number' | translate }}</ion-label>
+            <ion-input (ionChange)="setDocument($event)" formControlName="docNumber"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-item [ngClass]="{'error': !email.valid && email.touched }">
+        <ion-label position="floating">{{ 'email' | translate }}</ion-label>
+        <ion-input (ionChange)="inputChange($event, 'email')" type="text" formControlName="email"></ion-input>
+      </ion-item>
+    </ion-item-group>
+  </form>
+  <ion-button class="ion-margin" expand="block" color="primary" (click)="submit()">{{ 'pay_now' | translate }}</ion-button>
+</ion-content>
+<ion-footer>
+</ion-footer>

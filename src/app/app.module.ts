@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { RouteReuseStrategy } from '@angular/router';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { AuthInterceptor } from '../interceptors/auth.interceptor';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Redux
 import { AuthEffects } from 'src/store/effects/auth.effects';
@@ -25,19 +26,25 @@ import { WelcomePage } from './welcome/welcome.page';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegisterPage } from './register/register';
 import { CustomTranslationLoader } from 'src/factories/translation-loader.factory';
+import { PaymentCardComponent } from './payment-card/payment-card.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginPage,
+    PaymentCardComponent,
     RegisterPage,
     WelcomePage
+  ],
+  exports: [
+    PaymentCardComponent
   ],
   entryComponents: [],
   imports: [
     AppRoutingModule,
     BrowserModule,
+    BrowserAnimationsModule,
     IonicModule.forRoot(),
     EffectsModule.forRoot([
       AuthEffects
