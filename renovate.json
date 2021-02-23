@@ -1,8 +1,23 @@
 {
+    "baseBranches": [
+        "development"
+    ],
     "extends": [
         "config:base"
     ],
     "docker-compose": {
         "enabled": true
-    }
+    },
+    "packageRules": [
+        {
+            "matchPackagePatterns": [
+                "id90-http-utils, id90-logger"
+            ],
+            "enabled": false
+        }
+    ],
+    "reviewers": [
+        "team:Development"
+    ],
+    "schedule": "every two weeks starting on the 4th of March in 2021"
 }
