@@ -19,5 +19,6 @@
     "reviewers": [
         "team:Development"
     ],
-    "schedule": "every two weeks starting on the 4th of March in 2021"
+    "schedule": "at 19:00 every 2 weeks after 3 day of March in 2021",
+    "timezone": "America/Argentina/Buenos_Aires"
 }
