@@ -1,0 +1,32 @@
+{
+    "extends": [
+        "config:base"
+    ],
+    "matchPackageNames": [
+        "angular",
+        "angular-animate",
+        "angular-scroll",
+        "angular-sanitize",
+        "coveralls",
+        "ember-exam",
+        "ember-mocha",
+        "ember-qunit",
+        "istanbul",
+        "mock-fs",
+        "nock",
+        "nyc",
+        "proxyquire",
+        "supertest"
+    ],
+    "matchPackagePatterns": [
+        "^chai",
+        "^jest",
+        "^mocha",
+        "^qunit",
+        "^sinon",
+        "^should"
+    ],
+    "docker-compose": {
+        "enabled": true
+    }
+}
